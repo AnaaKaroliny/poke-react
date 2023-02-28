@@ -1,0 +1,30 @@
+.rock {
+  background-color: #c7b78b;
+}
+.ghost {
+  background-color: #5269ac;
+}
+.electric {
+  background-color: #f4d23b;
+}
+.bug {
+  background-color: #76a866;
+}
+.poison {
+  background-color: #ad61ae;
+}
+.normal {
+  background-color: #bf9762;
+}
+.fairy {
+  background-color: #ec8fe6;
+}
+.fire {
+  background-color: #eaab7d;
+}
+.grass {
+  background-color: #729f92;
+}
+.water {
+  background-color: #71c3ff;
+}
