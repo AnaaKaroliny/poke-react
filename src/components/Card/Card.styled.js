@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { getColors } from "../../utils/ReturnCardColor";
+import { Colors } from "../../utils/ReturnColors";
 
 export const ImagePoke = styled.img`
   width: 14rem;
@@ -16,6 +18,10 @@ export const Pokemon = styled.img`
   position: relative;
 `;
 
+export const BG = styled.div`
+  background-color: ${(props) => Colors(props.types)} #0f0f;
+`;
+
 export const Container = styled.div`
   display: flex;
 
@@ -26,6 +32,7 @@ export const Container = styled.div`
   width: 26rem;
   height: 13.12rem;
   border-radius: 12px;
+  background-color: #729f92;
 
   div {
     display: flex;
@@ -161,4 +168,5 @@ export const DivH3 = styled.div`
 
   display: flex;
   flex-direction: row;
+  background: ${(props) => getColors(props.types)} #0f0f;
 `;

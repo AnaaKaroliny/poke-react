@@ -2,7 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { goToDetailsPage } from "../../routes/coordinator";
+import { getColors } from "../../utils/ReturnCardColor";
+import { Colors } from "../../utils/ReturnColors";
 import {
+  BG,
   ButtonExcluir,
   Container,
   Details,
@@ -38,39 +41,65 @@ function Card(props) {
     }
   };
 
-  const renderTypes = (types) => {
-    return types.map((type) => <h3>{type.type.name}</h3>);
+  const renderTypes = (types, getColorForType) => {
+    return types.map((type) => (
+      <h3 style={{ backgroundColor: getColorForType(type.type.name) }}>
+        {type.type.name}
+      </h3>
+    ));
   };
 
+  const renderColors = (types, colorsCard) => {
+    return types.map((type) => (
+      <BG style={{ backgroundColor: colorsCard(pokemon.types[0]?.type.name) }}>
+        {type.types}
+      </BG>
+    ));
+  };
+
+  function getColorForType(type) {
+    return getColors(type);
+  }
+
+  function colorsCard(type) {
+    return Colors(type);
+  }
+
   return (
-    <Container>
-      <DiviEsquerda>
-        {pokemon && (
-          <Details>
-            <h4>#0{pokemon.id}</h4>
-            <h1> {pokemon.name}</h1>
-            <DivH3>{pokemon.types && renderTypes(pokemon.types)}</DivH3>
-          </Details>
-        )}
+    <BG types={pokemon.types}>
+      {pokemon.types && renderColors(pokemon.types, colorsCard) && (
+        <Container>
+          <DiviEsquerda>
+            {pokemon && (
+              <Details>
+                <h4>#0{pokemon.id}</h4>
+                <h1> {pokemon.name}</h1>
+                <DivH3 types={pokemon.types}>
+                  {pokemon.types && renderTypes(pokemon.types, getColorForType)}
+                </DivH3>
+              </Details>
+            )}
 
-        <button onClick={() => goToDetailsPage(navigate)}>Detalhes</button>
-      </DiviEsquerda>
+            <button onClick={() => goToDetailsPage(navigate)}>Detalhes</button>
+          </DiviEsquerda>
 
-      <DivDireita>
-        <ImagePoke src={Pokebola} alt="" />
-        <Pokemon
-          src={pokemon.sprites?.other.dream_world.front_default}
-          alt={pokemon.name}
-        />
-        {location.pathname === "/" ? (
-          <button onClick={() => addToPokedex(pokemon)}>Capturar!</button>
-        ) : (
-          <ButtonExcluir onClick={() => removeFromPokedex(pokemon)}>
-            Excluir
-          </ButtonExcluir>
-        )}
-      </DivDireita>
-    </Container>
+          <DivDireita>
+            <ImagePoke src={Pokebola} alt="" />
+            <Pokemon
+              src={pokemon.sprites?.other.dream_world.front_default}
+              alt={pokemon.name}
+            />
+            {location.pathname === "/" ? (
+              <button onClick={() => addToPokedex(pokemon)}>Capturar!</button>
+            ) : (
+              <ButtonExcluir onClick={() => removeFromPokedex(pokemon)}>
+                Excluir
+              </ButtonExcluir>
+            )}
+          </DivDireita>
+        </Container>
+      )}
+    </BG>
   );
 }
 
